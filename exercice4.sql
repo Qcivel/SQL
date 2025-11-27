@@ -28,11 +28,11 @@ id_author INT
 
 CREATE TABLE IF NOT EXISTS commentary(
 id_commentary INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-content VARCHAR(255),
-created_at DATETIME,
-enabled INT,
-id_account INT,
-id_book INT
+content VARCHAR(255) NOT NULL,
+created_at DATETIME NOT NULL,
+enabled INT NOT NULL,
+id_account INT NOT NULL,
+id_book INT NOT NULL
 )ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `account`(
@@ -52,8 +52,8 @@ PRIMARY KEY(id_book, id_category)
 )ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS book_account(
-id_book INT,
-id_account INT,
+id_book INT NOT NULL,
+id_account INT NOT NULL,
 PRIMARY KEY(id_book, id_account)
 )ENGINE=InnoDB;
 
@@ -98,7 +98,7 @@ FOREIGN KEY(id_account)
 REFERENCES `account`(id_account);
 
 -- Ajouter un attribut dans la table account :
-ALTER TABLE account
+ALTER TABLE `account`
 ADD COLUMN account_img VARCHAR(255) NOT NULL  DEFAULT 'default.png';
 
 -- Ajouter un attribut dans la table book :
@@ -113,8 +113,10 @@ ADD COLUMN note INT NOT NULL DEFAULT 0;
 ALTER TABLE book
 MODIFY publication_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
 
--- Exercice 1 SQL requêtes de mise à jour INSERT SQL :
--- 1 Créer 5 categories de book
+/*
+Exercice 1 SQL requêtes de mise à jour INSERT SQL :
+ 1 Créer 5 categories de book
+*/
 
 INSERT INTO category (category_name) VALUES
 ('Fantasy'),
@@ -131,7 +133,6 @@ INSERT INTO `account`(firstname, lastname, email, password_account, created_at, 
 ('Hermione','Granger','hermione.grander@gmail.com','JJHFDVXVSddgjnbv', NOW(),1, 'default.png');
 
 -- 3 Créer 5 authors
-
 
 INSERT INTO author (firstname, lastname, pseudo) VALUES
 ('JK','rowling','JKrowling'),
@@ -189,7 +190,6 @@ INSERT INTO book_category (id_book, id_category) VALUES
 
  -- 6 Ajouter 2 commentaries (liés aux books) pour chaque account.
 
-
 INSERT INTO commentary (content, created_at, enabled, id_account, id_book, note) VALUES
 ('Amazing book, I loved it!', NOW(), 1, 1, 5, 5),
 ('Great mystery, very captivating.', NOW(), 1, 1, 4, 4),
@@ -197,7 +197,6 @@ INSERT INTO commentary (content, created_at, enabled, id_account, id_book, note)
 ('Not my favorite, but good.', NOW(), 1, 2, 3, 3),
 ('Beautiful novel, emotional.', NOW(), 1, 3, 5, 5),
 ('Incredible writing!', NOW(), 1, 3, 7, 5);
-
 
 
 -- Exercice 2 SQL requêtes de mise à jour UPDATE SQL :

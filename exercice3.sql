@@ -14,9 +14,9 @@ CREATE TABLE IF NOT EXISTS played(
 played_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
 sucessfull BOOLEAN NOT NULL,
 create_at DATETIME NOT NULL,
-users_id INT,
-quizz_id INT,
-question_id INT
+users_id INT NOT NULL,
+quizz_id INT NOT NULL,
+question_id INT NOT NULL
 )ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS users(
@@ -26,7 +26,7 @@ lastname VARCHAR(50) NOT NULL,
 email VARCHAR(50) UNIQUE NOT NULL,
 password_users VARCHAR(100) NOT NULL,
 roles VARCHAR(255) NOT NULL,
-avatar VARCHAR(255) UNIQUE 
+avatar VARCHAR(255) 
 )ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS quizz(
@@ -41,7 +41,7 @@ answer_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
 text_answer VARCHAR(100) NOT NULL,
 valid BOOLEAN NOT NULL,
 answer_point INT NOT NULL,
-question_id INT
+question_id INT NOT NULL
 )ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS question(
@@ -80,7 +80,7 @@ REFERENCES users(users_id)
 ON DELETE CASCADE;
 
 ALTER TABLE played
-ADD CONSTRAINT fk_to_played_quetion
+ADD CONSTRAINT fk_to_played_question
 FOREIGN KEY(question_id)
 REFERENCES question(question_id)
 ON DELETE CASCADE;
